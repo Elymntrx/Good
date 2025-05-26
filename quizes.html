@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Change Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .quiz-trigger {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .quiz-trigger:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .quiz-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .quiz-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.8) rotateY(180deg);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .quiz-overlay.active .quiz-container {
+            transform: scale(1) rotateY(0deg);
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .quiz-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00c6fb, #005bea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { filter: drop-shadow(0 0 5px rgba(0, 198, 251, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(0, 91, 234, 0.8)); }
+        }
+
+        .quiz-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+            transform: translateX(100px);
+            opacity: 0;
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 198, 251, 0.6);
+            box-shadow: 0 10px 25px rgba(0, 198, 251, 0.3);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #00c6fb, #005bea);
+            border-color: #00c6fb;
+            transform: scale(1.02);
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            border-color: #11998e;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .option.wrong {
+            background: linear-gradient(135deg, #ff416c, #ff4757);
+            border-color: #ff416c;
+            animation: wrongShake 0.6s ease;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00c6fb, #005bea);
+            border-radius: 10px;
+            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progressShimmer 2s infinite;
+        }
+
+        @keyframes progressShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .quiz-score {
+            text-align: center;
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .results-container {
+            text-align: center;
+            animation: resultsAppear 0.8s ease forwards;
+        }
+
+        @keyframes resultsAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .results-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 20px 0;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: scoreGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes scoreGlow {
+            from { filter: drop-shadow(0 0 10px rgba(240, 147, 251, 0.5)); }
+            to { filter: drop-shadow(0 0 30px rgba(245, 87, 108, 0.8)); }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .quiz-container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .quiz-title {
+                font-size: 2rem;
+            }
+
+            .question {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+
+            .option {
+                padding: 12px 15px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-trigger {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+
+            .quiz-title {
+                font-size: 1.5rem;
+            }
+
+            .question {
+                font-size: 1rem;
+            }
+
+            .final-score {
+                font-size: 2rem;
+            }
+        }
+
+        /* Custom scrollbar */
+        .quiz-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .quiz-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .quiz-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #00c6fb, #005bea);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button class="quiz-trigger" onclick="openQuiz()">🌍 Take Climate Quiz</button>
+
+    <div class="quiz-overlay" id="quizOverlay">
+        <div class="quiz-container">
+            <button class="close-btn" onclick="closeQuiz()">&times;</button>
+            
+            <div class="quiz-header">
+                <h1 class="quiz-title">🌱 Climate Challenge</h1>
+                <p class="quiz-subtitle">Test your knowledge about climate change</p>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="quiz-score">
+                Question <span id="currentQuestion">1</span> of <span id="totalQuestions">5</span>
+            </div>
+
+            <div id="quizContent">
+                <!-- Quiz questions will be inserted here -->
+            </div>
+
+            <div class="quiz-navigation">
+                <button class="nav-btn" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the primary cause of current climate change?",
+                options: [
+                    "Natural solar variations",
+                    "Greenhouse gas emissions from human activities",
+                    "Volcanic eruptions",
+                    "Changes in Earth's orbit"
+                ],
+                correct: 1
+            },
+            {
+                question: "Which greenhouse gas is most abundant in Earth's atmosphere?",
+                options: [
+                    "Carbon dioxide (CO₂)",
+                    "Methane (CH₄)",
+                    "Water vapor (H₂O)",
+                    "Nitrous oxide (N₂O)"
+                ],
+                correct: 2
+            },
+            {
+                question: "What percentage of climate scientists agree that human activities are the primary cause of recent climate change?",
+                options: [
+                    "Around 50%",
+                    "Around 75%",
+                    "Over 97%",
+                    "Around 85%"
+                ],
+                correct: 2
+            },
+            {
+                question: "Which of the following is NOT a major effect of climate change?",
+                options: [
+                    "Rising sea levels",
+                    "More frequent extreme weather events",
+                    "Decreased global population",
+                    "Ocean acidification"
+                ],
+                correct: 2
+            },
+            {
+                question: "What is the most effective individual action to reduce carbon footprint?",
+                options: [
+                    "Recycling more",
+                    "Taking shorter showers",
+                    "Reducing air travel and car use",
+                    "Buying organic food"
+                ],
+                correct: 2
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let score = 0;
+        let quizCompleted = false;
+
+        function openQuiz() {
+            document.getElementById('quizOverlay').classList.add('active');
+            resetQuiz();
+            showQuestion();
+        }
+
+        function closeQuiz() {
+            document.getElementById('quizOverlay').classList.remove('active');
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            score = 0;
+            quizCompleted = false;
+            updateProgress();
+            updateNavigation();
+        }
+
+        function showQuestion() {
+            if (quizCompleted) {
+                showResults();
+                return;
+            }
+
+            const question = quizData[currentQuestionIndex];
+            const quizContent = document.getElementById('quizContent');
+            
+            quizContent.innerHTML = `
+                <div class="question-container">
+                    <div class="question">${question.question}</div>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <div class="option" onclick="selectOption(${index})" data-index="${index}">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Show previously selected answer
+            if (userAnswers[currentQuestionIndex] !== undefined) {
+                const selectedOption = quizContent.querySelector(`[data-index="${userAnswers[currentQuestionIndex]}"]`);
+                if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                }
+            }
+
+            updateQuestionCounter();
+            updateProgress();
+            updateNavigation();
+        }
+
+        function selectOption(optionIndex) {
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selection to clicked option
+            event.target.classList.add('selected');
+            
+            userAnswers[currentQuestionIndex] = optionIndex;
+            updateNavigation();
+        }
+
+        function nextQuestion() {
+            if (userAnswers[currentQuestionIndex] === undefined) return;
+
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function finishQuiz() {
+            calculateScore();
+            quizCompleted = true;
+            showResults();
+        }
+
+        function calculateScore() {
+            score = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === quizData[index].correct) {
+                    score++;
+                }
+            });
+        }
+
+        function showResults() {
+            const percentage = Math.round((score / quizData.length) * 100);
+            let message = "";
+            let emoji = "";
+
+            if (percentage >= 80) {
+                message = "Excellent! You're a climate champion! 🌟";
+                emoji = "🏆";
+            } else if (percentage >= 60) {
+                message = "Good job! You have solid climate knowledge. 👍";
+                emoji = "🌱";
+            } else {
+                message = "Keep learning! Every step towards climate awareness counts. 📚";
+                emoji = "🌍";
+            }
+
+            document.getElementById('quizContent').innerHTML = `
+                <div class="results-container">
+                    <div class="results-title">${emoji} Quiz Complete!</div>
+                    <div class="final-score">${score}/${quizData.length}</div>
+                    <div style="color: white; font-size: 1.2rem; margin-bottom: 20px;">${percentage}% Correct</div>
+                    <div style="color: white; font-size: 1.1rem; margin-bottom: 30px;">${message}</div>
+                    <button class="nav-btn" onclick="resetQuiz(); showQuestion();" style="margin-right: 10px;">Try Again</button>
+                    <button class="nav-btn" onclick="closeQuiz()">Close</button>
+                </div>
+            `;
+
+            // Hide navigation buttons
+            document.querySelector('.quiz-navigation').style.display = 'none';
+            
+            // Update progress to 100%
+            document.getElementById('progressFill').style.width = '100%';
+        }
+
+        function updateQuestionCounter() {
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = quizData.length;
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.textContent = 'Finish';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+
+            // Disable next button if no answer selected for current question
+            nextBtn.disabled = userAnswers[currentQuestionIndex] === undefined;
+        }
+
+        // Close quiz when clicking outside the container
+        document.getElementById('quizOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeQuiz();
+            }
+        });
+
+        // Close quiz with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeQuiz();
+            }
+        });
+    </script>
+</body>
+</html>

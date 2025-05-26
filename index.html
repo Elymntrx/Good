@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Ghana Alliance - Global Environmental Solutions</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#2E7D32',
+                    secondary: '#00796B'
+                },
+                borderRadius: {
+                    'none': '0px',
+                    'sm': '4px',
+                    DEFAULT: '8px',
+                    'md': '12px',
+                    'lg': '16px',
+                    'xl': '20px',
+                    '2xl': '24px',
+                    '3xl': '32px',
+                    'full': '9999px',
+                    'button': '8px' // Custom border-radius for buttons
+                }
+            }
+        }
+    }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+    /* Ensure Remixicon displays correctly */
+    :where([class^="ri-"])::before {
+        font-family: 'remixicon' !important; /* Explicitly set font family for icons */
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .akan {
+        font-style: italic;
+        opacity: 0.9;
+    }
+
+    .hero-section {
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0) 100%), url('https://readdy.ai/api/search-image?query=Beautiful%2520lush%2520green%2520Ghanaian%2520forest%2520landscape%2520with%2520tall%2520trees%2520and%2520vibrant%2520vegetation%252C%2520showing%2520rich%2520biodiversity%2520and%2520conservation%2520efforts%252C%2520morning%2520sunlight%2520filtering%2520through%2520the%2520canopy%252C%2520creating%2520a%2520serene%2520and%2520hopeful%2520atmosphere%252C%2520perfect%2520for%2520a%2520climate%2520change%2520website%2520hero%2520section&width=1920&height=1080&seq=forest1&orientation=landscape');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .ghana-pattern {
+        background-image: url('https://readdy.ai/api/search-image?query=Subtle%2520traditional%2520Ghanaian%2520Kente%2520pattern%2520in%2520muted%2520colors%252C%2520geometric%2520shapes%2520and%2520symbols%2520arranged%2520in%2520a%2520repeating%2520pattern%252C%2520soft%2520and%2520elegant%2520design%2520that%2520works%2520as%2520a%2520background%2520texture%252C%2520very%2520light%2520and%2520subtle%2520appearance%2520that%2520doesn%2527t%2520distract%2520from%2520content&width=400&height=400&seq=pattern1&orientation=squarish');
+        background-size: 200px;
+        background-repeat: repeat;
+        opacity: 0.05;
+    }
+
+    .counter {
+        font-variant-numeric: tabular-nums;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #2E7D32;
+        /* Tailwind's focus:ring-primary and focus:border-primary are better */
+    }
+
+    .map-container {
+        background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .action-card {
+        transition: transform 0.3s ease;
+    }
+
+    .action-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="#" class="text-2xl font-['Pacifico'] text-primary mr-8">Green Ghana Alliance</a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#Home" class="text-gray-600 hover:text-primary transition">Home</a>
+                    <a href="#Blog" class="text-gray-600 hover:text-primary transition">Blog</a>
+                    <a href="#Media" class="text-gray-600 hover:text-primary transition">Media</a>
+                    <a href="#LearnMore" class="text-gray-600 hover:text-primary transition">Learn More</a>
+                    <a href="#" id="openQuizLink" class="text-gray-600 hover:text-primary transition">Pop Quiz</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="hidden md:block">
+                    <button class="bg-primary text-white px-4 py-2 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">
+                        Support GGA
+                    </button>
+                </div>
+                <div class="hidden md:flex items-center border border-gray-200 !rounded-button overflow-hidden">
+                    <button class="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium whitespace-nowrap">English</button>
+                    <button class="px-3 py-1 text-gray-500 text-sm whitespace-nowrap">Akan</button>
+                </div>
+                <button class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700" id="mobileMenuButton">
+                    <i class="ri-menu-line ri-lg"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <section id="Home" class="hero-section relative min-h-[600px] flex items-center">
+        <div class="container mx-auto px-4 py-16 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="text-white">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-2">Climate Crisis Demands Action</h1>
+                    <p class="text-2xl md:text-3xl mb-6">Every Action Counts. Every Degree Matters.</p>
+                    <p class="text-lg md:text-xl mb-8 max-w-xl">The climate crisis is the defining challenge of our time. Join our global initiative to reduce emissions, protect ecosystems, and build a sustainable future for all.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">
+                            Join Climate Action
+                        </button>
+                        <button class="bg-white/20 backdrop-blur-sm text-white border border-white/40 px-6 py-3 !rounded-button font-medium hover:bg-white/30 transition whitespace-nowrap">
+                            Watch Videos
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-video bg-black/40 backdrop-blur !rounded-lg overflow-hidden">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=abcdef" title="Climate Change: Our Greatest Challenge" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 right-8 bg-black/60 backdrop-blur-sm text-white px-6 py-4 !rounded-xl">
+            <p class="text-sm uppercase tracking-wider mb-1">Global Temperature Rise</p>
+            <div class="counter text-3xl md:text-4xl font-bold" id="temp-counter">1.5°C</div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Featured Videos</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Watch our latest videos about climate action and environmental initiatives.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white shadow-lg !rounded-lg overflow-hidden">
+                    <div class="aspect-video bg-black/40">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/Pj1L5pT-y90?si=abcdef" title="Climate Solutions in Action" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-2">Our Impact Story</h3>
+                        <p class="text-gray-600 text-sm">See how our initiatives are making a difference in communities across the region.</p>
+                    </div>
+                </div>
+                <div class="bg-white shadow-lg !rounded-lg overflow-hidden">
+                    <div class="aspect-video bg-black/40">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/kK_Vj5W3gR4?si=abcdef" title="Community Climate Action" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg mb-2">Community Stories</h3>
+                        <p class="text-gray-600 text-sm">Hear from the communities and individuals leading the change on the ground.</p>
+                    </d>
+                </div>
+            </div>
+            <div class="bg-white shadow-lg !rounded-lg overflow-hidden">
+                <div class="aspect-video bg-black/40">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/Qv21I7xLhYk?si=abcdef" title="Climate Future" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-2">Future Goals</h3>
+                    <p class="text-gray-600 text-sm">Learn about our ambitious plans for creating a sustainable future.</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white relative overflow-hidden">
+        <div class="ghana-pattern absolute inset-0"></div>
+        <div class="container mx-auto px-4 relative">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Impact Across Ghana</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Tracking our reforestation efforts and community engagement across all regions of Ghana.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white shadow-lg !rounded-lg p-4 h-[400px] map-container">
+                    </div>
+                <div class="bg-white shadow-lg !rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Regional Progress</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-700">Northern Region</span>
+                                <span class="text-primary font-medium">78%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 !rounded-full h-2">
+                                <div class="bg-primary !rounded-full h-2" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-700">Ashanti Region</span>
+                                <span class="text-primary font-medium">92%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 !rounded-full h-2">
+                                <div class="bg-primary !rounded-full h-2" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-700">Greater Accra</span>
+                                <span class="text-primary font-medium">65%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 !rounded-full h-2">
+                                <div class="bg-primary !rounded-full h-2" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-700">Western Region</span>
+                                <span class="text-primary font-medium">83%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 !rounded-full h-2">
+                                <div class="bg-primary !rounded-full h-2" style="width: 83%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-700">Eastern Region</span>
+                                <span class="text-primary font-medium">71%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 !rounded-full h-2">
+                                <div class="bg-primary !rounded-full h-2" style="width: 71%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <button class="w-full bg-gray-100 text-gray-700 px-4 py-2 !rounded-button font-medium hover:bg-gray-200 transition whitespace-nowrap">
+                            View Detailed Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12">
+                <div class="bg-white shadow-lg !rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-6">Carbon Offset Progress</h3>
+                    <div id="carbon-chart" class="h-[300px]"></div>
+                </div>
+            </div>
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold mb-6">Success Stories</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white shadow-lg !rounded-lg overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Ghanaian%2520community%2520members%2520planting%2520trees%2520together%2520in%2520a%2520rural%2520area%252C%2520showing%2520diverse%2520group%2520of%2520people%2520working%2520together%252C%2520smiling%2520faces%252C%2520traditional%2520clothing%252C%2520lush%2520green%2520surroundings%252C%2520positive%2520community%2520action%2520for%2520reforestation%2520efforts&width=600&height=400&seq=success1&orientation=landscape" alt="Community Planting" class="w-full h-48 object-cover object-top">
+                        <div class="p-4">
+                            <h4 class="font-semibold text-lg mb-2">Kumasi Community Forest</h4>
+                            <p class="text-gray-600 text-sm">Local residents restored 50 hectares of degraded land, creating a thriving ecosystem that now serves as a community resource.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-lg !rounded-lg overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Ghanaian%2520school%2520children%2520learning%2520about%2520environmental%2520conservation%252C%2520classroom%2520setting%2520with%2520educational%2520materials%2520about%2520trees%2520and%2520forests%252C%2520engaged%2520students%2520in%2520school%2520uniforms%252C%2520teacher%2520demonstrating%2520with%2520plant%2520samples%252C%2520bright%2520and%2520positive%2520educational%2520environment&width=600&height=400&seq=success2&orientation=landscape" alt="School Program" class="w-full h-48 object-cover object-top">
+                        <div class="p-4">
+                            <h4 class="font-semibold text-lg mb-2">Accra Schools Initiative</h4>
+                            <p class="text-gray-600 text-sm">25 schools across Accra have implemented environmental education programs, with students planting over 10,000 trees.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-lg !rounded-lg overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=Ghanaian%2520farmers%2520working%2520in%2520an%2520agroforestry%2520system%252C%2520showing%2520integration%2520of%2520trees%2520with%2520crops%252C%2520sustainable%2520farming%2520practices%252C%2520local%2520farmers%2520tending%2520to%2520plants%252C%2520traditional%2520farming%2520tools%252C%2520diverse%2520crops%2520growing%2520under%2520tree%2520canopy%252C%2520successful%2520agricultural%2520innovation&width=600&height=400&seq=success3&orientation=landscape" alt="Agroforestry" class="w-full h-48 object-cover object-top">
+                        <div class="p-4">
+                            <h4 class="font-semibold text-lg mb-2">Tamale Agroforestry</h4>
+                            <p class="text-gray-600 text-sm">Farmers in Tamale have adopted agroforestry techniques, increasing crop yields by 35% while restoring soil health.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-primary/5">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Impact in Numbers</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Measuring our progress in the fight against climate change and deforestation in Ghana.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white shadow-md !rounded-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-primary/10 !rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-plant-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="counter text-3xl font-bold mb-2" id="hectares-counter">42,500</h3>
+                    <p class="text-gray-600">Hectares Reforested</p>
+                </div>
+                <div class="bg-white shadow-md !rounded-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-primary/10 !rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-home-4-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="counter text-3xl font-bold mb-2" id="communities-counter">215</h3>
+                    <p class="text-gray-600">Communities Involved</p>
+                </div>
+                <div class="bg-white shadow-md !rounded-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-primary/10 !rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-user-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="counter text-3xl font-bold mb-2" id="farmers-counter">12,780</h3>
+                    <p class="text-gray-600">Farmer Beneficiaries</p>
+                </div>
+                <div class="bg-white shadow-md !rounded-lg p-6 text-center">
+                    <div class="w-16 h-16 bg-primary/10 !rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ri-cloud-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="counter text-3xl font-bold mb-2" id="carbon-counter">857,400</h3>
+                    <p class="text-gray-600">Tonnes CO₂ Offset</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Get Involved Today</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Join our efforts to create a greener, more sustainable Ghana through these impactful initiatives.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="action-card bg-white shadow-lg !rounded-lg overflow-hidden">
+                    <img src="https://readdy.ai/api/search-image?query=Close-up%2520of%2520hands%2520planting%2520a%2520young%2520tree%2520sapling%2520in%2520rich%2520soil%252C%2520African%2520hands%2520showing%2520care%2520for%2520nature%252C%2520reforestation%2520effort%2520in%2520Ghana%252C%2520green%2520leaves%2520of%2520young%2520plant%252C%2520hopeful%2520image%2520of%2520environmental%2520restoration%252C%2520sunlight%2520filtering%2520through%2520leaves&width=600&height=400&seq=plant1&orientation=landscape" alt="Plant a Tree" class="w-full h-48 object-cover object-top">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Plant a Tree</h3>
+                        <p class="text-gray-600 mb-4">Join our community tree planting programs across Ghana. One tree at a time, we can restore our forests and combat climate change.</p>
+                        <button class="bg-primary text-white px-4 py-2 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">
+                            Join Now
+                        </button>
+                    </div>
+                </div>
+                <div class="action-card bg-white shadow-lg !rounded-lg overflow-hidden">
+                    <img src="https://readdy.ai/api/search-image?query=Ghanaian%2520farmer%2520in%2520traditional%2520clothing%2520working%2520in%2520a%2520sustainable%2520farm%252C%2520diverse%2520crops%2520growing%2520in%2520rows%252C%2520agroforestry%2520system%2520with%2520trees%2520integrated%2520with%2520agriculture%252C%2520fertile%2520soil%252C%2520sustainable%2520farming%2520practices%252C%2520rural%2520Ghana%2520setting&width=600&height=400&seq=farmer1&orientation=landscape" alt="Support Farmers" class="w-full h-48 object-cover object-top">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Support Local Farmers</h3>
+                        <p class="text-gray-600 mb-4">Help Ghanaian farmers adopt sustainable agricultural practices that protect the environment while improving their livelihoods.</p>
+                        <button class="bg-primary text-white px-4 py-2 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">
+                            Support Now
+                        </button>
+                    </div>
+                </div>
+                <div class="action-card bg-white shadow-lg !rounded-lg overflow-hidden">
+                    <img src="https://readdy.ai/api/search-image?query=Diverse%2520group%2520of%2520Ghanaian%2520volunteers%2520wearing%2520green%2520t-shirts%2520working%2520together%2520on%2520environmental%2520project%252C%2520showing%2520teamwork%2520and%2520community%2520spirit%252C%2520mix%2520of%2520ages%2520and%2520genders%252C%2520engaged%2520in%2520conservation%2520activity%252C%2520smiling%2520and%2520collaborating%2520in%2520outdoor%2520setting&width=600&height=400&seq=volunteer1&orientation=landscape" alt="Join Movement" class="w-full h-48 object-cover object-top">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Join the Movement</h3>
+                        <p class="text-gray-600 mb-4">Volunteer your time and skills to our various environmental initiatives. From education to advocacy, there's a role for everyone.</p>
+                        <button class="bg-primary text-white px-4 py-2 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">
+                            Volunteer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">Stay Connected</h2>
+                    <p class="text-gray-600 mb-8">Join our community of environmental advocates and stay updated on our latest initiatives, success stories, and opportunities to get involved.</p>
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 !rounded-full flex items-center justify-center">
+                                <i class="ri-mail-line ri-lg text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Newsletter</h3>
+                                <p class="text-gray-600 text-sm">Receive monthly updates on our progress</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 !rounded-full flex items-center justify-center">
+                                <i class="ri-whatsapp-line ri-lg text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">WhatsApp Community</h3>
+                                <p class="text-gray-600 text-sm">Join our local community groups</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 !rounded-full flex items-center justify-center">
+                                <i class="ri-map-pin-line ri-lg text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Local Office</h3>
+                                <p class="text-gray-600 text-sm">Visit us at 25 Independence Ave, Accra</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 !rounded-full flex items-center justify-center">
+                                <i class="ri-phone-line ri-lg text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Contact Us</h3>
+                                <p class="text-gray-600 text-sm">+233 30 277 6234 | info@greenghanalliance.org</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="font-semibold mb-4">Follow Us</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white shadow-sm !rounded-full flex items-center justify-center">
+                                <i class="ri-facebook-fill ri-lg text-gray-700"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white shadow-sm !rounded-full flex items-center justify-center">
+                                <i class="ri-twitter-x-fill ri-lg text-gray-700"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white shadow-sm !rounded-full flex items-center justify-center">
+                                <i class="ri-instagram-line ri-lg text-gray-700"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white shadow-sm !rounded-full flex items-center justify-center">
+                                <i class="ri-youtube-fill ri-lg text-gray-700"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white shadow-lg !rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-6">Subscribe to Our Newsletter</h3>
+                    <form id="newsletterForm">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 mb-2">Full Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 !rounded-button focus:border-primary" placeholder="Your name">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 !rounded-button focus:border-primary" placeholder="Your email">
+                        </div>
+                        <div class="mb-4">
+                            <label for="region" class="block text-gray-700 mb-2">Region</label>
+                            <div class="relative">
+                                <select id="region" class="w-full px-4 py-2 border border-gray-300 !rounded-button focus:border-primary appearance-none pr-8">
+                                    <option value="">Select your region</option>
+                                    <option value="greater-accra">Greater Accra</option>
+                                    <option value="ashanti">Ashanti</option>
+                                    <option value="western">Western</option>
+                                    <option value="eastern">Eastern</option>
+                                    <option value="central">Central</option>
+                                    <option value="northern">Northern</option>
+                                    <option value="volta">Volta</option>
+                                    <option value="brong-ahafo">Bono Ahafo</option>
+                                    <option value="upper-east">Upper East</option>
+                                    <option value="upper-west">Upper West</option>
+                                    <option value="savannah">Savannah</option>
+                                    <option value="north-east">North East</option>
+                                    <option value="oti">Oti</option>
+                                    <option value="ahafo">Ahafo</option>
+                                    <option value="bono">Bono</option>
+                                    <option value="western-north">Western North</option>
+                                    <option value="boi">Boi</option>
+                                </select>
+                                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 border-gray-300 !rounded text-primary focus:ring-primary">
+                                <span class="ml-2 text-gray-700 text-sm">I'd like to receive WhatsApp updates</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white px-4 py-3 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">
+                            Subscribe
+                        </button>
+                    </form>
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <h4 class="font-semibold mb-4">Support Our Work</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button class="flex items-center justify-center space-x-2 bg-gray-100 px-4 py-2 !rounded-button hover:bg-gray-200 transition whitespace-nowrap">
+                                <i class="ri-bank-card-line text-gray-700"></i>
+                                <span>Donate</span>
+                            </button>
+                            <button class="flex items-center justify-center space-x-2 bg-gray-100 px-4 py-2 !rounded-button hover:bg-gray-200 transition whitespace-nowrap">
+                                <i class="ri-smartphone-line text-gray-700"></i>
+                                <span>Mobile Money</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="quizPopup" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] hidden p-4">
+        <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full relative">
+            <button id="closeQuizButton" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="ri-close-line ri-lg"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-6 text-center text-primary">Climate Action Quiz!</h3>
+
+            <div id="quizContainer">
+                <div class="quiz-question" data-question-index="0">
+                    <p class="mb-4 text-lg font-medium">1. Which of these is a major greenhouse gas?</p>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q0" value="a" class="mr-2"> Oxygen
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q0" value="b" class="mr-2"> Nitrogen
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q0" value="c" class="mr-2"> Carbon Dioxide
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q0" value="d" class="mr-2"> Argon
+                    </label>
+                </div>
+
+                <div class="quiz-question hidden" data-question-index="1">
+                    <p class="mb-4 text-lg font-medium">2. What is reforestation?</p>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q1" value="a" class="mr-2"> Cutting down trees
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q1" value="b" class="mr-2"> Planting new trees where forests once stood
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q1" value="c" class="mr-2"> Clearing land for farming
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q1" value="d" class="mr-2"> Building new houses
+                    </label>
+                </div>
+
+                <div class="quiz-question hidden" data-question-index="2">
+                    <p class="mb-4 text-lg font-medium">3. What does "sustainable development" mean?</p>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q2" value="a" class="mr-2"> Using all resources as quickly as possible
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q2" value="b" class="mr-2"> Meeting present needs without compromising future generations
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q2" value="c" class="mr-2"> Focusing only on economic growth
+                    </label>
+                    <label class="block mb-2 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors">
+                        <input type="radio" name="q2" value="d" class="mr-2"> Ignoring environmental concerns
+                    </label>
+                </div>
+
+            </div>
+
+            <div id="quizNavigation" class="mt-6 flex justify-between">
+                <button id="prevQuestionButton" class="bg-gray-200 text-gray-700 px-5 py-2 rounded-button hover:bg-gray-300 hidden">Previous</button>
+                <button id="nextQuestionButton" class="bg-primary text-white px-5 py-2 rounded-button hover:bg-primary/90">Next</button>
+                <button id="submitQuizButton" class="bg-primary text-white px-5 py-2 rounded-button hover:bg-primary/90 hidden">Submit Quiz</button>
+            </div>
+
+            <div id="quizResult" class="hidden mt-4 text-center">
+                <p id="resultText" class="text-lg font-semibold mb-4"></p>
+                <p id="scoreText" class="text-xl font-bold text-primary mb-4"></p>
+                <button id="retakeQuizButton" class="mt-4 bg-gray-200 text-gray-700 px-5 py-2 rounded-button hover:bg-gray-300">Retake Quiz</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Counter Animation Script
+        document.addEventListener('DOMContentLoaded', function() {
+            function animateCounter(elementId, targetValue, duration = 2000) {
+                const element = document.getElementById(elementId);
+                if (!element) return;
+
+                // Check if the counter has already been animated
+                if (element.dataset.animated) {
+                    element.textContent = targetValue.toLocaleString('en-US') + (elementId === 'temp-counter' ? '°C' : '');
+                    return;
+                }
+
+                const startValue = 0;
+                const frameDuration = 1000 / 60; // 60 frames per second
+                const totalFrames = Math.round(duration / frameDuration);
+                let currentFrame = 0;
+
+                function formatNumber(num) {
+                    if (elementId === 'temp-counter') {
+                        return num.toFixed(1) + '°C';
+                    }
+                    return Math.floor(num).toLocaleString('en-US');
+                }
+
+                const animate = () => {
+                    currentFrame++;
+                    const progress = currentFrame / totalFrames;
+                    const value = startValue + (targetValue - startValue) * progress;
+
+                    element.textContent = formatNumber(value);
+
+                    if (currentFrame < totalFrames) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        element.textContent = formatNumber(targetValue);
+                        element.dataset.animated = true; // Mark as animated
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }
+
+            // Observer to trigger animations when elements enter viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        switch (entry.target.id) {
+                            case 'temp-counter':
+                                animateCounter('temp-counter', 1.5, 1500); // Specific duration for temp
+                                break;
+                            case 'hectares-counter':
+                                animateCounter('hectares-counter', 42500);
+                                break;
+                            case 'communities-counter':
+                                animateCounter('communities-counter', 215);
+                                break;
+                            case 'farmers-counter':
+                                animateCounter('farmers-counter', 12780);
+                                break;
+                            case 'carbon-counter':
+                                animateCounter('carbon-counter', 857400);
+                                break;
+                        }
+                        observer.unobserve(entry.target); // Stop observing after animation
+                    }
+                });
+            }, {
+                threshold: 0.5 // Trigger when 50% of the element is visible
+            });
+
+            // Observe all counter elements
+            document.querySelectorAll('.counter').forEach(counter => {
+                observer.observe(counter);
+            });
+        });
+    </script>
+
+    <script>
+        // Carbon Chart Init Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartDom = document.getElementById('carbon-chart');
+            if (!chartDom) return;
+
+            const myChart = echarts.init(chartDom);
+            const option = {
+                animation: true, // Enable animation for the chart
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    borderColor: '#eee',
+                    borderWidth: 1,
+                    textStyle: {
+                        color: '#1f2937'
+                    },
+                    axisPointer: {
+                        type: 'cross' // Show crosshair for better interaction
+                    }
+                },
+                legend: {
+                    data: ['Carbon Offset (tonnes)', 'Target'],
+                    bottom: 0,
+                    textStyle: {
+                        color: '#1f2937'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    top: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['2020', '2021', '2022', '2023', '2024', '2025'],
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ddd'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#1f2937'
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Tonnes CO₂',
+                    nameTextStyle: {
+                        color: '#1f2937'
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: '#1f2937'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#eee'
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Carbon Offset (tonnes)',
+                        type: 'line',
+                        smooth: true,
+                        lineStyle: {
+                            width: 3,
+                            color: 'rgba(87, 181, 231, 1)'
+                        },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(87, 181, 231, 0.2)'
+                            }, {
+                                offset: 1,
+                                color: 'rgba(87, 181, 231, 0.05)'
+                            }])
+                        },
+                        symbol: 'circle', // Show symbols on points
+                        symbolSize: 8,
+                        data: [120000, 245000, 382000, 567000, 720000, 857400]
+                    },
+                    {
+                        name: 'Target',
+                        type: 'line',
+                        smooth: true,
+                        lineStyle: {
+                            width: 3,
+                            color: 'rgba(141, 211, 199, 1)',
+                            type: 'dashed'
+                        },
+                        symbol: 'diamond', // Show symbols on points
+                        symbolSize: 8,
+                        data: [100000, 250000, 400000, 600000, 800000, 1000000]
+                    }
+                ]
+            };
+            myChart.setOption(option);
+            window.addEventListener('resize', function() {
+                myChart.resize();
+            });
+        });
+    </script>
+
+    <script>
+        // Form Validation Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('newsletterForm'); // Added ID to form
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nameInput = document.getElementById('name');
+                const emailInput = document.getElementById('email');
+                const regionInput = document.getElementById('region');
+                let isValid = true;
+
+                // Clear previous error states
+                nameInput.classList.remove('border-red-500');
+                emailInput.classList.remove('border-red-500');
+                regionInput.classList.remove('border-red-500');
+
+                if (!nameInput.value.trim()) {
+                    nameInput.classList.add('border-red-500');
+                    isValid = false;
+                }
+
+                // Basic email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+                    emailInput.classList.add('border-red-500');
+                    isValid = false;
+                }
+
+                if (!regionInput.value) { // Check if a region is selected
+                    regionInput.classList.add('border-red-500');
+                    isValid = false;
+                }
+
+
+                if (isValid) {
+                    // Remove any existing success messages
+                    const existingSuccessMessage = form.querySelector('.success-message');
+                    if (existingSuccessMessage) {
+                        existingSuccessMessage.remove();
+                    }
+
+                    // Show success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'mt-4 p-3 bg-green-100 text-green-800 !rounded-button success-message';
+                    successMessage.textContent = 'Thank you for subscribing to our newsletter!';
+                    form.appendChild(successMessage);
+
+                    // Reset form
+                    form.reset();
+
+                    // Remove message after 3 seconds
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 3000);
+                } else {
+                    // Optionally, show a general error message if any field is invalid
+                    const existingErrorMessage = form.querySelector('.error-message');
+                    if (!existingErrorMessage) {
+                        const errorMessage = document.createElement('div');
+                        errorMessage.className = 'mt-4 p-3 bg-red-100 text-red-800 !rounded-button error-message';
+                        errorMessage.textContent = 'Please correct the highlighted fields.';
+                        form.insertBefore(errorMessage, form.firstChild); // Insert at the top
+                        setTimeout(() => {
+                            errorMessage.remove();
+                        }, 3000);
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // Mobile Menu Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            if (!mobileMenuButton) return;
+
+            // Create mobile menu (if not already existing)
+            let mobileMenu = document.getElementById('mobileNav');
+            if (!mobileMenu) {
+                mobileMenu = document.createElement('div');
+                mobileMenu.id = 'mobileNav';
+                mobileMenu.className = 'fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:hidden';
+                mobileMenu.innerHTML = `
+                <div class="flex justify-between items-center p-4 border-b">
+                    <span class="text-xl font-['Pacifico'] text-primary">Green Ghana Alliance</span>
+                    <button class="w-10 h-10 flex items-center justify-center text-gray-700" id="closeMobileMenuButton">
+                        <i class="ri-close-line ri-lg"></i>
+                    </button>
+                </div>
+                <nav class="p-4">
+                    <ul class="space-y-4">
+                        <li><a href="#Home" class="block py-2 px-4 text-gray-600 hover:text-primary transition">Home</a></li>
+                        <li><a href="#Blog" class="block py-2 px-4 text-gray-600 hover:text-primary transition">Blog</a></li>
+                        <li><a href="#Media" class="block py-2 px-4 text-gray-600 hover:text-primary transition">Media</a></li>
+                        <li><a href="#LearnMore" class="block py-2 px-4 text-gray-600 hover:text-primary transition">Learn More</a></li>
+                        <li><a href="#" id="openQuizLinkMobile" class="block py-2 px-4 text-gray-600 hover:text-primary transition">Pop Quiz</a></li>
+                    </ul>
+                </nav>
+                <div class="p-4 border-t">
+                    <button class="w-full bg-primary text-white px-4 py-3 !rounded-button font-medium mb-4 whitespace-nowrap hover:bg-primary/90 transition">
+                        Support GGA
+                    </button>
+                    <div class="flex border border-gray-200 !rounded-button overflow-hidden">
+                        <button class="flex-1 py-2 bg-gray-100 text-gray-700 text-sm font-medium whitespace-nowrap">English</button>
+                        <button class="flex-1 py-2 text-gray-500 text-sm whitespace-nowrap">Akan</button>
+                    </div>
+                </div>
+            `;
+                document.body.appendChild(mobileMenu);
+            }
+
+            // Get close button after it's in the DOM
+            const closeButton = document.getElementById('closeMobileMenuButton');
+            const mobileQuizLink = document.getElementById('openQuizLinkMobile');
+
+
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.classList.add('overflow-hidden'); // Prevent body scroll
+            });
+
+            closeButton.addEventListener('click', function() {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.classList.remove('overflow-hidden'); // Allow body scroll
+            });
+
+            // Close mobile menu when a link is clicked
+            mobileMenu.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.classList.remove('overflow-hidden');
+                });
+            });
+
+            // Event listener for the Pop Quiz link in mobile menu
+            if (mobileQuizLink) {
+                mobileQuizLink.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent default link behavior
+                    document.getElementById('quizPopup').classList.remove('hidden');
+                    document.body.classList.add('overflow-hidden'); // Keep body from scrolling
+                    mobileMenu.classList.add('translate-x-full'); // Close mobile menu
+                });
+            }
+
+        });
+    </script>
+
+    <script>
+        // Pop Quiz Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const openQuizLink = document.getElementById('openQuizLink'); // Desktop link
+            const quizPopup = document.getElementById('quizPopup');
+            const closeQuizButton = document.getElementById('closeQuizButton');
+            const quizContainer = document.getElementById('quizContainer');
+            const quizQuestions = document.querySelectorAll('.quiz-question');
+            const prevQuestionButton = document.getElementById('prevQuestionButton');
+            const nextQuestionButton = document.getElementById('nextQuestionButton');
+            const submitQuizButton = document.getElementById('submitQuizButton');
+            const quizResult = document.getElementById('quizResult');
+            const resultText = document.getElementById('resultText');
+            const scoreText = document.getElementById('scoreText');
+            const retakeQuizButton = document.getElementById('retakeQuizButton');
+
+            let currentQuestionIndex = 0;
+            const correctAnswers = ['c', 'b', 'b']; // Correct answers for each question (0-indexed)
+
+            function showQuiz() {
+                quizPopup.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden'); // Prevent scrolling body when popup is open
+                resetQuiz();
+            }
+
+            function hideQuiz() {
+                quizPopup.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            function displayQuestion() {
+                quizQuestions.forEach((question, index) => {
+                    if (index === currentQuestionIndex) {
+                        question.classList.remove('hidden');
+                    } else {
+                        question.classList.add('hidden');
+                    }
+                });
+
+                // Update navigation buttons
+                prevQuestionButton.classList.toggle('hidden', currentQuestionIndex === 0);
+                nextQuestionButton.classList.toggle('hidden', currentQuestionIndex === quizQuestions.length - 1);
+                submitQuizButton.classList.toggle('hidden', currentQuestionIndex !== quizQuestions.length - 1);
+
+                // If on the last question, show submit button
+                if (currentQuestionIndex === quizQuestions.length - 1) {
+                    nextQuestionButton.classList.add('hidden');
+                    submitQuizButton.classList.remove('hidden');
+                } else {
+                    submitQuizButton.classList.add('hidden');
+                    nextQuestionButton.classList.remove('hidden');
+                }
+            }
+
+            function goToNextQuestion() {
+                if (currentQuestionIndex < quizQuestions.length - 1) {
+                    currentQuestionIndex++;
+                    displayQuestion();
+                }
+            }
+
+            function goToPrevQuestion() {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    displayQuestion();
+                }
+            }
+
+            function submitQuiz() {
+                let score = 0;
+                for (let i = 0; i < quizQuestions.length; i++) {
+                    const selectedAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                    if (selectedAnswer && selectedAnswer.value === correctAnswers[i]) {
+                        score++;
+                    }
+                }
+
+                quizContainer.classList.add('hidden');
+                quizNavigation.classList.add('hidden'); // Hide navigation buttons
+                quizResult.classList.remove('hidden');
+
+                scoreText.textContent = `You scored ${score} out of ${quizQuestions.length}!`;
+                if (score === quizQuestions.length) {
+                    resultText.textContent = 'Excellent! You are a climate champion!';
+                    resultText.classList.remove('text-red-600');
+                    resultText.classList.add('text-green-600');
+                } else if (score >= quizQuestions.length / 2) {
+                    resultText.textContent = 'Good effort! Keep learning.';
+                    resultText.classList.remove('text-red-600');
+                    resultText.classList.add('text-orange-600');
+                } else {
+                    resultText.textContent = 'Keep learning about climate action!';
+                    resultText.classList.remove('text-green-600', 'text-orange-600');
+                    resultText.classList.add('text-red-600');
+                }
+            }
+
+            function resetQuiz() {
+                currentQuestionIndex = 0;
+                quizQuestions.forEach(question => {
+                    question.classList.add('hidden');
+                    question.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+                });
+                quizResult.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                quizNavigation.classList.remove('hidden'); // Show navigation buttons again
+                displayQuestion(); // Display the first question
+            }
+
+            // Event Listeners
+            if (openQuizLink) {
+                openQuizLink.addEventListener('click', showQuiz);
+            }
+            if (closeQuizButton) {
+                closeQuizButton.addEventListener('click', hideQuiz);
+            }
+            if (nextQuestionButton) {
+                nextQuestionButton.addEventListener('click', goToNextQuestion);
+            }
+            if (prevQuestionButton) {
+                prevQuestionButton.addEventListener('click', goToPrevQuestion);
+            }
+            if (submitQuizButton) {
+                submitQuizButton.addEventListener('click', submitQuiz);
+            }
+            if (retakeQuizButton) {
+                retakeQuizButton.addEventListener('click', resetQuiz);
+            }
+
+            displayQuestion(); // Initial display of the first question when quiz loads
+        });
+    </script>
+</body>
+</html>
